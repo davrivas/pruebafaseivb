@@ -14,6 +14,8 @@
             <ui:include src="/WEB-INF/templates/cliente/menu-cliente.xhtml"/>
 
             <h2>Mis cuentas</h2>
+            
+            <h:messages globalOnly="true" showDetail="true" class="alert alerta" infoClass="alert-success" errorClass="alert-danger" warnClass="alert-warning"/>
 
             <ui:repeat value="#{sesionControlador.usuario.cuentaList}" var="c">
                 <div class="row mt-3">

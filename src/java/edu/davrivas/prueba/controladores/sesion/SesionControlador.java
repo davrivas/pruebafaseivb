@@ -160,23 +160,29 @@ public class SesionControlador implements Serializable {
         try {
             usuario = ufl.findByCorreo(correoRecuperar);
             
-            fc.addMessage("recuperar", new FacesMessage(FacesMessage.SEVERITY_INFO, "Usuario encontrado:", "Bien"));
+            if (usuario.getEstado() == 1) {
+            fc.addMessage("recuperar", new FacesMessage(FacesMessage.SEVERITY_INFO, "Usuario encontrado:", "Bien"));   
+            } else {
+            fc.addMessage("recuperar", new FacesMessage(FacesMessage.SEVERITY_WARN, "Usuario bloqueado:", "Javaliste :v"));   
+            }
         } catch (NullPointerException e) {
             fc.addMessage("recuperar", new FacesMessage(FacesMessage.SEVERITY_ERROR, "Usuario no  encontrado:", "Revise que haya digitado el correo correcto"));
         }
     }
 
-    public String cambiarClave() {
+    public void cambiarClave() {
         FacesContext fc = FacesContext.getCurrentInstance();
         ExternalContext ec = fc.getExternalContext();
 
         if (claveActual.equals(usuario.getClave())) {
-            //
+            if (claveNueva.equals(confirmacionClaveNueva)) {
+                fc.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Contraseña cambiada con éxito", ""));
+            } else {
+                fc.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Las contraseñas no coinciden:", "Revise que haya digitado bien la confirmación de nueva contraseña"));
+            }
         } else {
-            fc.addMessage(null, new FacesMessage());
+            fc.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "La contraseña no coincide:", "Revise que haya digitado la contraseña correcta"));
         }
-        
-        return "";
     }
 
 }

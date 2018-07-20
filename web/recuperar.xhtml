@@ -23,7 +23,7 @@
                     <small>Te enviaremos un correo electrónico con una clave temporal, te recomendamos que la cambies tan pronto la recibas</small>
                 </div>
                 <div class="form-group">
-                    <h:messages for="recuperar" showDetail="true" class="messages" infoClass="messages-success" errorClass="messages-error" warnClass="messages-warning" />
+                    <h:messages for="recuperar" showDetail="true" class="alert alerta" infoClass="alert-success" errorClass="alert-danger" warnClass="alert-warning" />
                 </div>
                 <div class="form-group">
                     <h:commandButton actionListener="#{sesionControlador.recuperarClave()}" class="btn btn-primary btn-block" value="Recuperar cuenta" a:type="submit"/>
