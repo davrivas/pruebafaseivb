@@ -1,0 +1,20 @@
+/* 
+    Author     : davrivas
+*/
+
+.messages {
+    list-style: none;
+    padding-left: 0;
+}
+
+.messages-error {
+    color: #f00;
+}
+
+.messages-warning {
+    color: #ffbc00;
+}
+
+.messages-success {
+    color: #0f0;
+}

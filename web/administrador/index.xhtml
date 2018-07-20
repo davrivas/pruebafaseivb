@@ -1,0 +1,90 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      template="/WEB-INF/template/template.xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:head>
+        <ui:include src="/WEB-INF/templates/head.xhtml"/>
+        <title>#{sesionControlador.rol.nombre} - Clientes</title>
+    </h:head>
+    <h:body>
+        <div class="container">
+            <ui:include src="/WEB-INF/templates/administrador/menu-administrador.xhtml"/>
+
+            <h2>Clientes</h2>
+
+            <h3>Bloquear cliente</h3>
+
+            <h:dataTable class="table table-striped" value="#{clienteControlador.clientesNoBloqueados}" var="cl">
+                <h:column>
+                    <f:facet name="header">Documento</f:facet>
+                    <h:outputLabel value="#{cl.tblTiposDocumentoId.sigla} #{cl.documento}"/>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">Nombres</f:facet>
+                    <h:outputLabel value="#{cl.nombres}"/>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">Apellidos</f:facet>
+                    <h:outputLabel value="#{cl.primerApellido} #{cl.segundoApellido}"/>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">Dirección</f:facet>
+                    <h:outputLabel value="#{cl.direccion}, #{cl.tblCiudadesCodigo.nombre}"/>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">Teléfono</f:facet>
+                    <h:outputLabel value="#{cl.telefono}"/>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">Correo</f:facet>
+                    <h:outputLabel value="#{cl.correo}"/>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">Bloquear</f:facet>
+                    <h:commandLink class="btn btn-primary" actionListener="#{administradorControlador.seleccionarCliente(cl)}" a:data-toggle="modal" a:data-target="#modalBloquear">
+                        <f:ajax render=":modalBloquearContenido"/>
+                        <span class="fa fa-lock"></span>
+                    </h:commandLink>
+                </h:column>
+            </h:dataTable>
+
+            <div class="modal fade" id="modalBloquear" tabindex="-1" role="dialog" aria-labelledby="modalBloquearTitulo" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <h:panelGroup id="modalBloquearContenido" class="modal-content " layout="block">
+                        <h:form id="form-insert-cliente" prependId="false">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="modalInsertarTitulo">¿Desea bloquear a este cliente?</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <p><strong>Documento:</strong> #{administradorControlador.clienteSeleccionado.tblTiposDocumentoId.sigla} #{administradorControlador.clienteSeleccionado.documento}</p>
+                                <p><strong>Nombres:</strong> #{administradorControlador.clienteSeleccionado.nombres}</p>
+                                <p><strong>Apellidos: </strong> #{administradorControlador.clienteSeleccionado.primerApellido} #{administradorControlador.clienteSeleccionado.segundoApellido}</p>
+                                <p><strong>Dirección:</strong> #{administradorControlador.clienteSeleccionado.direccion}, #{administradorControlador.clienteSeleccionado.tblCiudadesCodigo.nombre}</p>
+                                <p><strong>Teléfono:</strong> #{administradorControlador.clienteSeleccionado.telefono}</p>
+                                <p><strong>Correo:</strong> #{administradorControlador.clienteSeleccionado.correo}</p>
+
+                                <p class="text-center"><em>Recuerde que al bloquear a un cliente se cierran las cuentas activas que tiene</em></p>
+                            </div>
+                            <div class="modal-footer">
+                                <h:commandButton action="#{administradorControlador.bloquearCliente()}" class="btn btn-primary" value="Bloquear cliente" a:type="submit"/>
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                            </div>
+                        </h:form>
+                    </h:panelGroup>
+                </div>
+            </div>
+        </div>
+        
+        <ui:include src="/WEB-INF/templates/cambiar-clave.xhtml"/>
+
+        <ui:include src="/WEB-INF/templates/script.xhtml"/>
+    </h:body>
+</html>
+

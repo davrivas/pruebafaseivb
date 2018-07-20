@@ -1,0 +1,40 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
+    <h:head>
+        <ui:include src="/WEB-INF/templates/head.xhtml"/>
+        <title>Recuperar cuenta</title>
+    </h:head>
+    <h:body>
+        <div class="container col-md-6 col">
+            <img src="#{request.contextPath}/resources/img/icon.png" alt="Logo" width="100px" height="auto" style="margin: auto;display: block"/>
+            <h2 class="text-center" style="color: green;">Banco del pueblo</h2>
+
+
+            <h1 class="text-center mt-5">Recuperar cuenta</h1>
+
+            <h:form id="recuperar" prependId="false">
+                <div class="form-group">
+                    <h:outputLabel for="correo" value="Correo electrónico" />
+                    <h:inputText id="correo" a:type="email" value="#{sesionControlador.correoRecuperar}" class="form-control" a:required="" />
+                    <small>Te enviaremos un correo electrónico con una clave temporal, te recomendamos que la cambies tan pronto la recibas</small>
+                </div>
+                <div class="form-group">
+                    <h:messages for="recuperar" showDetail="true" class="messages" infoClass="messages-success" errorClass="messages-error" warnClass="messages-warning" />
+                </div>
+                <div class="form-group">
+                    <h:commandButton actionListener="#{sesionControlador.recuperarClave()}" class="btn btn-primary btn-block" value="Recuperar cuenta" a:type="submit"/>
+                </div>
+                <div class="form-group">
+                    <p class="text-center"><a href="index.xhtml">Inicia sesión</a></p>
+                </div>
+            </h:form>
+        </div>
+
+        <ui:include src="/WEB-INF/templates/script.xhtml"/>
+    </h:body>
+</html>
+
