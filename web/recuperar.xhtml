@@ -18,9 +18,9 @@
 
             <h:form id="recuperar" prependId="false">
                 <div class="form-group">
-                    <h:outputLabel for="correo" value="Correo electrónico" />
+                    <h:outputLabel for="correo">Correo electrónico <span class="requerido">*</span></h:outputLabel>
                     <h:inputText id="correo" a:type="email" value="#{sesionControlador.correoRecuperar}" class="form-control" a:required="" />
-                    <small>Te enviaremos un correo electrónico con una clave temporal, te recomendamos que la cambies tan pronto la recibas</small>
+                    <small>Te enviaremos un correo electrónico con una clave nueva. Te recomendamos que la cambies tan pronto la recibas</small>
                 </div>
                 <div class="form-group">
                     <h:messages for="recuperar" showDetail="true" class="alert alerta" infoClass="alert-success" errorClass="alert-danger" warnClass="alert-warning" />

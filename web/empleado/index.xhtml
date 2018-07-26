@@ -14,7 +14,7 @@
             <ui:include src="/WEB-INF/templates/empleado/menu-empleado.xhtml"/>
 
             <h2>Movimientos</h2>
-            
+
             <h:messages globalOnly="true" showDetail="true" class="alert alerta" infoClass="alert-success" errorClass="alert-danger" warnClass="alert-warning"/>
 
             <div class="row mt-1 mb-2">
@@ -50,72 +50,74 @@
                     <h:outputLabel value="#{m.tblCuentasId.tblUsuariosId.nombres} #{m.tblCuentasId.tblUsuariosId.primerApellido} #{m.tblCuentasId.tblUsuariosId.segundoApellido}"/>
                 </h:column>
             </h:dataTable>
+        </div>
 
-            <div class="modal fade" id="modalRetiro" tabindex="-1" role="dialog" aria-labelledby="modalRetiroTitulo" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered" role="document">
-                    <h:panelGroup id="contenidoModalRetiro" class="modal-content" layout="block">
-                        <h:form id="form-retiro" prependId="false">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="modalRetiroTitulo">Registrar retiro</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
+        <div class="modal fade" id="modalRetiro" tabindex="-1" role="dialog" aria-labelledby="modalRetiroTitulo" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <h:panelGroup id="contenidoModalRetiro" class="modal-content" layout="block">
+                    <h:form id="form-retiro" prependId="false">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="modalRetiroTitulo">Registrar retiro</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <h:outputLabel for="valor-retiro">Valor <span class="requerido">*</span></h:outputLabel>
+                                <h:inputText id="valor-retiro" a:type="number" class="form-control" a:required="" a:placeholder="Ingrese valor del retiro" value="#{empleadoControlador.movimientoCuenta.valor}"/>
                             </div>
-                            <div class="modal-body">
-                                <div class="form-group">
-                                    <h:outputLabel value="Valor" />
-                                    <h:inputText a:type="number" class="form-control" required="" a:placeholder="Ingrese valor" value="#{empleadoControlador.movimientoCuenta.valor}"/>
-                                </div>
-                                <div class="form-group">
-                                    <h:outputLabel value="Cuenta" />
-                                    <h:selectOneMenu class="form-control" required="" value="#{empleadoControlador.movimientoCuenta.tblCuentasId}">
-                                        <f:selectItems value="#{cuentaControlador.cuentasAC}" var="c" itemLabel="Cuenta #{c.tblTiposCuentasId.nombre} ##{c.numero} de #{c.tblUsuariosId.nombres} #{c.tblUsuariosId.primerApellido} #{c.tblUsuariosId.segundoApellido}" />
-                                    </h:selectOneMenu>
-                                </div>
+                            <div class="form-group">
+                                <h:outputLabel for="cuenta-retiro">Cuenta <span class="requerido">*</span></h:outputLabel>
+                                <h:selectOneMenu id="cuenta-retiro" class="form-control" a:required="" value="#{empleadoControlador.movimientoCuenta.tblCuentasId}">
+                                    <f:selectItem value="" itemLabel="Selecciona la cuenta"/>
+                                    <f:selectItems value="#{cuentaControlador.cuentasAC}" var="c" itemLabel="Cuenta #{c.tblTiposCuentasId.nombre} ##{c.numero} de #{c.tblUsuariosId.nombres} #{c.tblUsuariosId.primerApellido} #{c.tblUsuariosId.segundoApellido}" />
+                                </h:selectOneMenu>
                             </div>
-                            <div class="modal-footer">
-                                <h:commandButton a:type="submit" class="btn btn-success" value="Registrar retiro" action="#{empleadoControlador.registrarRetiro()}"/>
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                            </div>
-                        </h:form>
-                    </h:panelGroup>
-                </div>
+                        </div>
+                        <div class="modal-footer">
+                            <h:commandButton a:type="submit" class="btn btn-success" value="Registrar retiro" action="#{empleadoControlador.registrarRetiro()}"/>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                        </div>
+                    </h:form>
+                </h:panelGroup>
             </div>
+        </div>
 
-            <div class="modal fade" id="modalConsignacion" tabindex="-1" role="dialog" aria-labelledby="modalConsignacionTitulo" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered" role="document">
-                    <h:panelGroup id="contenidoModalConsignacion" class="modal-content" layout="block">
-                        <h:form id="form-consignacion" prependId="false">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="modalConsignacionTitulo">Registrar consignación</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
+        <div class="modal fade" id="modalConsignacion" tabindex="-1" role="dialog" aria-labelledby="modalConsignacionTitulo" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <h:panelGroup id="contenidoModalConsignacion" class="modal-content" layout="block">
+                    <h:form id="form-consignacion" prependId="false">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="modalConsignacionTitulo">Registrar consignación</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <h:outputLabel for="valor-consignacion">Valor <span class="requerido">*</span></h:outputLabel>
+                                <h:inputText id="valor-consignacion" a:type="number" class="form-control" required="" a:placeholder="Ingrese valor" value="#{empleadoControlador.movimientoCuenta.valor}"/>
                             </div>
-                            <div class="modal-body">
-                                <div class="form-group">
-                                    <h:outputLabel value="Valor" />
-                                    <h:inputText a:type="number" class="form-control" required="" a:placeholder="Ingrese valor" value="#{empleadoControlador.movimientoCuenta.valor}"/>
-                                </div>
-                                <div class="form-group">
-                                    <h:outputLabel value="Cuenta" />
-                                    <h:selectOneMenu class="form-control" required="" value="#{empleadoControlador.movimientoCuenta.tblCuentasId}">
-                                        <f:selectItems value="#{cuentaControlador.cuentas}" var="c" itemLabel="Cuenta #{c.tblTiposCuentasId.nombre} ##{c.numero} de #{c.tblUsuariosId.nombres} #{c.tblUsuariosId.primerApellido} #{c.tblUsuariosId.segundoApellido}"/>
-                                    </h:selectOneMenu>
-                                </div>
+                            <div class="form-group">
+                                <h:outputLabel for="cuenta-consignacion">Cuenta <span class="requerido">*</span></h:outputLabel>
+                                <h:selectOneMenu id="cuenta-consignacion" class="form-control" required="" value="#{empleadoControlador.movimientoCuenta.tblCuentasId}">
+                                    <f:selectItem value="" itemLabel="Selecciona la cuenta"/>
+                                    <f:selectItems value="#{cuentaControlador.cuentas}" var="c" itemLabel="Cuenta #{c.tblTiposCuentasId.nombre} ##{c.numero} de #{c.tblUsuariosId.nombres} #{c.tblUsuariosId.primerApellido} #{c.tblUsuariosId.segundoApellido}"/>
+                                </h:selectOneMenu>
                             </div>
-                            <div class="modal-footer">
-                                <h:commandButton a:type="submit" class="btn btn-success" value="Registrar consignación" action="#{empleadoControlador.registrarConsignacion()}"/>
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                            </div>
-                        </h:form>
-                    </h:panelGroup>
-                </div>
+                        </div>
+                        <div class="modal-footer">
+                            <h:commandButton a:type="submit" class="btn btn-success" value="Registrar consignación" action="#{empleadoControlador.registrarConsignacion()}"/>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                        </div>
+                    </h:form>
+                </h:panelGroup>
             </div>
         </div>
 
         <ui:include src="/WEB-INF/templates/cambiar-clave.xhtml"/>
-        
+
         <ui:include src="/WEB-INF/templates/script.xhtml"/>
     </h:body>
 </html>

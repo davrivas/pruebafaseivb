@@ -16,15 +16,15 @@
                     </div>
                     <div class="modal-body">
                         <div class="form-group">
-                            <h:outputLabel for="clave-actual" value="Clave actual" />
+                            <h:outputLabel for="clave-actual">Clave actual <span class="recuperar">*</span></h:outputLabel>
                             <h:inputSecret id="clave-actual" value="#{sesionControlador.claveActual}" class="form-control" a:required="" />
                         </div>
                         <div class="form-group">
-                            <h:outputLabel for="clave-nueva" value="Clave nueva" />
+                            <h:outputLabel for="clave-nueva">Clave nueva <span class="recuperar">*</span></h:outputLabel>
                             <h:inputSecret id="clave-nueva" value="#{sesionControlador.claveNueva}" class="form-control" a:required="" />
                         </div>
                         <div class="form-group">
-                            <h:outputLabel for="confirmacion" value="Confirmación de clave nueva" />
+                            <h:outputLabel for="confirmacion">Confirmación de clave nueva <span class="recuperar">*</span></h:outputLabel>
                             <h:inputSecret id="confirmacion" value="#{sesionControlador.confirmacionClaveNueva}" class="form-control" a:required="" />
                         </div>
                     </div>

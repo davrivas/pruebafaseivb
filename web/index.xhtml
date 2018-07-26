@@ -19,12 +19,12 @@
 
             <h:form id="login" prependId="false">
                 <div class="form-group">
-                    <h:outputLabel for="correo" value="Correo electrónico" />
-                    <h:inputText id="correo" a:type="email" value="#{sesionControlador.correo}" class="form-control"/>
+                    <h:outputLabel for="correo">Correo electrónico <span class="requerido">*</span></h:outputLabel>
+                    <h:inputText id="correo" a:type="email" value="#{sesionControlador.correo}" class="form-control" a:required=""/>
                 </div>
                 <div class="form-group">
-                    <h:outputLabel for="clave" value="Clave"/>
-                    <h:inputSecret id="clave" value="#{sesionControlador.clave}" class="form-control"/>
+                    <h:outputLabel for="clave">Clave <span class="requerido">*</span></h:outputLabel>
+                    <h:inputSecret id="clave" value="#{sesionControlador.clave}" class="form-control" a:required=""/>
                 </div>
                 <div class="form-group">
                     <h:messages for="login" showDetail="true" class="alert alerta" infoClass="alert-success" errorClass="alert-danger" warnClass="alert-warning" />
@@ -36,33 +36,6 @@
                     <p class="text-center"><a href="recuperar.xhtml">¿Olvidaste tus datos de ingreso?</a></p>
                 </div>
             </h:form>
-        </div>
-
-        <div class="modal fade" id="modalRecuperar" tabindex="-1" role="dialog" aria-labelledby="modalRecuperarTitulo" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered" role="document">
-                <h:panelGroup id="modalRecuperarContenido" class="modal-content " layout="block">
-                    <h:form id="recuperar" prependId="false">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="modalInsertarTitulo">Recuperación de cuenta</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <div class="form-group">
-                                <h:outputLabel for="correo-recuperar" value="Correo electrónico" />
-                                <h:inputText id="correo-recuperar" a:type="email" value="#{sesionControlador.correoRecuperar}" class="form-control" a:required="" />
-                            </div>
-
-                            <small>Te enviaremos un correo electrónico con una clave temporal, te recomendamos que la cambies tan pronto la recibas</small>
-                        </div>
-                        <div class="modal-footer">
-                            <h:commandButton actionListener="#{sesionControlador.recuperarClave()}" class="btn btn-primary" value="Recuperar cuenta" a:type="submit"/>
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                        </div>
-                    </h:form>
-                </h:panelGroup>
-            </div>
         </div>
 
         <ui:include src="/WEB-INF/templates/script.xhtml"/>
