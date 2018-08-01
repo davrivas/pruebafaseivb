@@ -17,8 +17,8 @@
             
             <h:messages globalOnly="true" showDetail="true" class="alert alerta" infoClass="alert-success" errorClass="alert-danger" warnClass="alert-warning"/>
             
-            <button class="btn btn-success mt-1 mb-1">
-                Generar reporte
+            <button class="btn btn-success mt-1 mb-1" data-toggle="modal" data-target="#modalReporte">
+                <span class="fa fa-report"></span> Generar reporte
             </button>
 
             <h3>Cuentas CDT con más de un año</h3>
@@ -74,7 +74,7 @@
                             <div class="form-group">
                                 <h:outputLabel/>
                                 <h:selectOneMenu class="form-control" value="#{empleadoControlador.cliente}" a:required="">
-                                    <f:selectItem itemValue="" itemValue="Seleccionar cliente"/>
+                                    <f:selectItem itemValue="" itemLabel="Seleccionar cliente"/>
                                     <f:selectItems value="#{clienteControlador.clientes}" var="cl" itemLabel="#{cl.nombres} #{cl.primerApellido} #{cl.segundoApellido}"/>
                                 </h:selectOneMenu>
                             </div>
@@ -97,6 +97,37 @@
                     <h:form id="form-cancelar-cdt" prependId="false">
                         <div class="modal-header">
                             <h5 class="modal-title" id="modalCancelarCDTTitulo">¿Desea registrar el retiro del saldo total de la cuenta CDT para luego retirarla?</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <p><strong>Número:</strong> #{empleadoControlador.cuentaSeleccionada.numero}</p>
+                            <p>
+                                <strong>Fecha de apertura: </strong>
+                                <h:outputText value="#{empleadoControlador.cuentaSeleccionada.fechaApertura}">
+                                    <f:convertDateTime pattern="yyyy-MM-dd"/>
+                                </h:outputText>
+                            </p>
+                            <p><strong>Sucursal:</strong> #{empleadoControlador.cuentaSeleccionada.tblSucursalId.direccion}</p>
+                            <p><strong>Tipo de cuenta:</strong> #{empleadoControlador.cuentaSeleccionada.tblTiposCuentasId.nombre}</p>
+                            <p><strong>Nombre del cliente:</strong> #{empleadoControlador.cuentaSeleccionada.tblUsuariosId.nombres} #{empleadoControlador.cuentaSeleccionada.tblUsuariosId.primerApellido} #{empleadoControlador.cuentaSeleccionada.tblUsuariosId.segundoApellido}</p>
+                        </div>
+                        <div class="modal-footer">
+                            <h:commandButton action="#{empleadoControlador.cancelarCuentaCDT()}" class="btn btn-success" value="Realizar acción" a:type="submit"/>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                        </div>
+                    </h:form>
+                </h:panelGroup>
+            </div>
+        </div>
+        
+        <div class="modal fade" id="modalReporte" tabindex="-1" role="dialog" aria-labelledby="modalReporteTitulo" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <h:panelGroup id="contenidoModalReporte" class="modal-content" layout="block">
+                    <h:form id="form-cancelar-cdt" prependId="false">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="modalReporte">Generar reporte de cuentas de usuario</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>

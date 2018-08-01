@@ -5,6 +5,7 @@
  */
 package edu.davrivas.prueba.controladores.acciones;
 
+import com.mysql.jdbc.Connection;
 import edu.davrivas.prueba.controladores.mail.Mail;
 import edu.davrivas.prueba.controladores.sesion.SesionControlador;
 import edu.davrivas.prueba.modelo.dao.CiudadFacadeLocal;
@@ -20,15 +21,30 @@ import edu.davrivas.prueba.modelo.entidades.MovimientoCuenta;
 import edu.davrivas.prueba.modelo.entidades.TipoCuenta;
 import edu.davrivas.prueba.modelo.entidades.TipoDocumento;
 import edu.davrivas.prueba.modelo.entidades.Usuario;
+import java.io.File;
+import java.io.IOException;
+import java.io.OutputStream;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.ejb.EJB;
+import javax.faces.context.ExternalContext;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletResponse;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperExportManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import org.apache.jasper.JasperException;
 
 /**
  *
@@ -130,9 +146,9 @@ public class EmpleadoControlador implements Serializable {
         DateFormat formatoFecha = new SimpleDateFormat("yyyy/MM/dd");
 
         String titulo = "Hola " + cliente.getNombres() + " " + cliente.getPrimerApellido() + " " + cliente.getSegundoApellido();
-        String html = "<p>Se ha hecho una consignación a su cuenta " + 
-                cuentaAEditar.getTblTiposCuentasId().getNombre() + " #" + cuentaAEditar.getNumero()
-                + " por valor de $" + movimientoCuenta.getValor() + " el dia " 
+        String html = "<p>Se ha hecho una consignación a su cuenta "
+                + cuentaAEditar.getTblTiposCuentasId().getNombre() + " #" + cuentaAEditar.getNumero()
+                + " por valor de $" + movimientoCuenta.getValor() + " el dia "
                 + formatoFecha.format(movimientoCuenta.getFecha()) + "</p>"
                 + "<p>El saldo de su cuenta es ahora de $" + cuentaAEditar.getSaldo() + "</p>";
         String asunto = "Consignación a cuenta " + cuentaAEditar.getTblTiposCuentasId().getNombre() + " #" + cuentaAEditar.getNumero();
@@ -158,12 +174,12 @@ public class EmpleadoControlador implements Serializable {
         Usuario cliente = cuentaAEditar.getTblUsuariosId();
         String correoCliente = clienteSeleccionado.getCorreo();
         DateFormat formatoFecha = new SimpleDateFormat("yyyy/MM/dd");
-        
+
         String titulo = "Hola " + cliente.getNombres() + " " + cliente.getPrimerApellido() + " " + cliente.getSegundoApellido();
         String html = "<p>Se ha hecho un retiro a su cuenta "
                 + cuentaAEditar.getTblTiposCuentasId().getNombre() + " #"
-                + cuentaAEditar.getNumero() + " por valor de $" 
-                + movimientoCuenta.getValor() + " el dia " 
+                + cuentaAEditar.getNumero() + " por valor de $"
+                + movimientoCuenta.getValor() + " el dia "
                 + formatoFecha.format(movimientoCuenta.getFecha()) + "</p>"
                 + "<p>El saldo de su cuenta es ahora de $" + cuentaAEditar.getSaldo() + "</p>";
         String asunto = "Retiro de cuenta " + cuentaAEditar.getTblTiposCuentasId().getNombre() + " #" + cuentaAEditar.getNumero();
@@ -220,5 +236,33 @@ public class EmpleadoControlador implements Serializable {
         clienteSeleccionado = new Usuario();
 
         return "clientes.xhtml?faces-redirect=true";
+    }
+
+    public void generarReporte(Usuario cliente) {
+        try {
+            FacesContext fc = FacesContext.getCurrentInstance();
+            ExternalContext ec = fc.getExternalContext();
+            Connection conexion;
+            Class.forName("com.mysql.jdbc.Driver").newInstance();
+            conexion = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/prueba", "root", "");
+
+            try {
+                File jasper = new File(ec.getRealPath("/WEB-INF/classes/edu/hypatia/simu/reportes/moto.jasper"));
+                Map<String, Object> params = new HashMap<>();
+
+                JasperPrint jp = JasperFillManager.fillReport(jasper.getPath(), params, conexion);
+                HttpServletResponse hsr = (HttpServletResponse) ec.getResponse();
+                hsr.addHeader("Content-disposition", "attachment; filename=Reporte de Motos.pdf");
+                OutputStream os = hsr.getOutputStream();
+                JasperExportManager.exportReportToPdfStream(jp, os);
+                os.flush();
+                os.close();
+                fc.responseComplete();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
