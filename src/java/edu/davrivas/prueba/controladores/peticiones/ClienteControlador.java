@@ -24,8 +24,8 @@ public class ClienteControlador {
 
     @EJB
     private UsuarioFacadeLocal ufl;
-//    private List<Usuario> clientes;
-//    private List<Usuario> clientesNoBloqueados;
+    private List<Usuario> clientes;
+    private List<Usuario> clientesNoBloqueados;
     private List<Usuario> clientesSinCuentas;
 
     /**

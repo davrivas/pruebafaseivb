@@ -72,18 +72,18 @@
                         </div>
                         <div class="modal-body">
                             <div class="form-group">
-                                <h:outputLabel/>
-                                <h:selectOneMenu class="form-control" value="#{empleadoControlador.cliente}" a:required="">
-                                    <f:selectItem itemValue="" itemLabel="Seleccionar cliente"/>
+                                <h:outputLabel for="cliente-reporte">Cliente</h:outputLabel>
+                                <h:selectOneMenu class="form-control" id="cliente-reporte" value="#{empleadoControlador.cliente}" a:required="">
+                                    <!--<f:selectItem value="" itemLabel="Seleccionar cliente"/>-->
                                     <f:selectItems value="#{clienteControlador.clientes}" var="cl" itemLabel="#{cl.nombres} #{cl.primerApellido} #{cl.segundoApellido}"/>
                                 </h:selectOneMenu>
                             </div>
-                            <div class="form-group">
+<!--                            <div class="form-group">
                                 <h:outputLabel/>
-                            </div>
+                            </div>-->
                         </div>
                         <div class="modal-footer">
-                            <h:commandButton action="#{empleadoControlador.cancelarCuentaCDT()}" class="btn btn-success" value="Generar reporte" a:type="submit"/>
+                            <h:commandButton action="#{empleadoControlador.generarReporte()}" class="btn btn-success" value="Generar reporte" a:type="submit"/>
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
                         </div>
                     </h:form>
@@ -122,37 +122,6 @@
             </div>
         </div>
         
-        <div class="modal fade" id="modalReporte" tabindex="-1" role="dialog" aria-labelledby="modalReporteTitulo" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered" role="document">
-                <h:panelGroup id="contenidoModalReporte" class="modal-content" layout="block">
-                    <h:form id="form-cancelar-cdt" prependId="false">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="modalReporte">Generar reporte de cuentas de usuario</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <p><strong>Número:</strong> #{empleadoControlador.cuentaSeleccionada.numero}</p>
-                            <p>
-                                <strong>Fecha de apertura: </strong>
-                                <h:outputText value="#{empleadoControlador.cuentaSeleccionada.fechaApertura}">
-                                    <f:convertDateTime pattern="yyyy-MM-dd"/>
-                                </h:outputText>
-                            </p>
-                            <p><strong>Sucursal:</strong> #{empleadoControlador.cuentaSeleccionada.tblSucursalId.direccion}</p>
-                            <p><strong>Tipo de cuenta:</strong> #{empleadoControlador.cuentaSeleccionada.tblTiposCuentasId.nombre}</p>
-                            <p><strong>Nombre del cliente:</strong> #{empleadoControlador.cuentaSeleccionada.tblUsuariosId.nombres} #{empleadoControlador.cuentaSeleccionada.tblUsuariosId.primerApellido} #{empleadoControlador.cuentaSeleccionada.tblUsuariosId.segundoApellido}</p>
-                        </div>
-                        <div class="modal-footer">
-                            <h:commandButton action="#{empleadoControlador.cancelarCuentaCDT()}" class="btn btn-success" value="Realizar acción" a:type="submit"/>
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                        </div>
-                    </h:form>
-                </h:panelGroup>
-            </div>
-        </div>
-
         <ui:include src="/WEB-INF/templates/cambiar-clave.xhtml"/>
         
         <ui:include src="/WEB-INF/templates/script.xhtml"/>

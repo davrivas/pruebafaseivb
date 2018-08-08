@@ -70,7 +70,7 @@
                             <div class="form-group">
                                 <h:outputLabel for="cuenta-retiro">Cuenta <span class="requerido">*</span></h:outputLabel>
                                 <h:selectOneMenu id="cuenta-retiro" class="form-control" a:required="" value="#{empleadoControlador.movimientoCuenta.tblCuentasId}">
-                                    <f:selectItem value="" itemLabel="Selecciona la cuenta"/>
+                                    <!--<f:selectItem value="" itemLabel="Selecciona la cuenta"/>-->
                                     <f:selectItems value="#{cuentaControlador.cuentasAC}" var="c" itemLabel="Cuenta #{c.tblTiposCuentasId.nombre} ##{c.numero} de #{c.tblUsuariosId.nombres} #{c.tblUsuariosId.primerApellido} #{c.tblUsuariosId.segundoApellido}" />
                                 </h:selectOneMenu>
                             </div>
@@ -102,7 +102,7 @@
                             <div class="form-group">
                                 <h:outputLabel for="cuenta-consignacion">Cuenta <span class="requerido">*</span></h:outputLabel>
                                 <h:selectOneMenu id="cuenta-consignacion" class="form-control" required="" value="#{empleadoControlador.movimientoCuenta.tblCuentasId}">
-                                    <f:selectItem value="" itemLabel="Selecciona la cuenta"/>
+                                    <!--<f:selectItem value="" itemLabel="Selecciona la cuenta"/>-->
                                     <f:selectItems value="#{cuentaControlador.cuentas}" var="c" itemLabel="Cuenta #{c.tblTiposCuentasId.nombre} ##{c.numero} de #{c.tblUsuariosId.nombres} #{c.tblUsuariosId.primerApellido} #{c.tblUsuariosId.segundoApellido}"/>
                                 </h:selectOneMenu>
                             </div>

@@ -22,13 +22,11 @@ import edu.davrivas.prueba.modelo.entidades.TipoCuenta;
 import edu.davrivas.prueba.modelo.entidades.TipoDocumento;
 import edu.davrivas.prueba.modelo.entidades.Usuario;
 import java.io.File;
-import java.io.IOException;
 import java.io.OutputStream;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
 import java.sql.DriverManager;
-import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -40,11 +38,9 @@ import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletResponse;
-import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
-import org.apache.jasper.JasperException;
 
 /**
  *
@@ -238,21 +234,22 @@ public class EmpleadoControlador implements Serializable {
         return "clientes.xhtml?faces-redirect=true";
     }
 
-    public void generarReporte(Usuario cliente) {
+    public String generarReporte() {
         try {
             FacesContext fc = FacesContext.getCurrentInstance();
             ExternalContext ec = fc.getExternalContext();
             Connection conexion;
             Class.forName("com.mysql.jdbc.Driver").newInstance();
-            conexion = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/prueba", "root", "");
+            conexion = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/db_prueba", "root", "");
 
             try {
-                File jasper = new File(ec.getRealPath("/WEB-INF/classes/edu/hypatia/simu/reportes/moto.jasper"));
                 Map<String, Object> params = new HashMap<>();
-
+                params.put("cliente", cliente.getId());
+                params.put("imagen", "/resources/img/logo.png");
+                File jasper = new File(ec.getRealPath("/WEB-INF/classes/edu/davrivas/prueba/reportes/cuentas-cliente.jasper"));
                 JasperPrint jp = JasperFillManager.fillReport(jasper.getPath(), params, conexion);
                 HttpServletResponse hsr = (HttpServletResponse) ec.getResponse();
-                hsr.addHeader("Content-disposition", "attachment; filename=Reporte de Motos.pdf");
+                hsr.addHeader("Content-disposition", "attachment; filename=Reporte de cuentas de un cliente.pdf");
                 OutputStream os = hsr.getOutputStream();
                 JasperExportManager.exportReportToPdfStream(jp, os);
                 os.flush();
@@ -264,5 +261,9 @@ public class EmpleadoControlador implements Serializable {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        
+        cliente = new Usuario();
+        
+        return "";
     }
 }
